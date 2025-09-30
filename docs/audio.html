@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Webster‑PINN‑SVS — Audio Examples (AB / ABX)</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #10151d;
+      --muted: #7f8ea3;
+      --text: #e8eef6;
+      --brand: #6aa1ff;
+      --accent: #64d2b6;
+      --danger: #ff6a8b;
+      --border: #1b2430;
+      --radius: 16px;
+    }
+    html, body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    .wrap { max-width: 1100px; margin: 24px auto 80px; padding: 0 16px; }
+    h1 { font-weight: 800; letter-spacing: -0.015em; margin: 8px 0 6px; }
+    p.lead { color: var(--muted); margin-top: 0; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+    .card { background: linear-gradient(180deg, #0f1520, #0c121a); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .row > * { flex: none; }
+    .chip { font-size: 12px; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+    .btn { --bgc: #151c27; background: var(--bgc); color: var(--text); border: 1px solid var(--border); padding: 8px 12px; border-radius: 12px; cursor: pointer; transition: transform .02s ease, background .2s; font-weight: 600; }
+    .btn:hover { background: #182233; }
+    .btn[aria-pressed="true"], .btn.active { outline: 2px solid var(--brand); background: #162138; }
+    .btn.small { padding: 6px 10px; font-weight: 600; font-size: 12px; border-radius: 10px; }
+    .btn.brand { background: #13223a; border-color: #1f365a; }
+    .btn.danger { background: #2a1720; border-color: #3a1f29; }
+    .pill { border-radius: 999px; padding: 6px 10px; border: 1px dashed var(--border); color: var(--muted); }
+    .kdb { background: #121826; border: 1px solid var(--border); border-bottom-width: 3px; padding: 2px 6px; border-radius: 6px; font-weight: 700; }
+    .muted { color: var(--muted); }
+    .hr { height: 1px; background: var(--border); margin: 12px 0; border-radius: 2px; }
+    .title { font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+    .subtitle { color: var(--muted); font-size: 13px; margin-top: 2px; }
+    .variants { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+    .variants .btn { text-align: center; }
+    .footer { margin-top: 24px; font-size: 13px; color: var(--muted); }
+    .kbd-help { font-size: 12px; line-height: 1.6; }
+    .gain { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; }
+    .gain input[type="range"] { width: 100%; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Webster‑PINN‑SVS — Audio Examples</h1>
+    <p class="lead">AB / ABX listening for <span class="pill">reference</span>, <span class="pill">post‑render</span>, <span class="pill">DDSP‑only</span>, and <span class="pill">in‑graph</span>. Toggle instantly without losing position. Keyboard: <span class="kdb">Space</span> play/pause, <span class="kdb">A</span>/<span class="kdb">B</span> toggle, <span class="kdb">X</span> ABX, <span class="kdb">←/→</span> seek ±1s.</p>
+
+    <div class="card" id="global">
+      <div class="row" style="justify-content: space-between;">
+        <div>
+          <div class="title">Global controls</div>
+          <div class="subtitle">Affects the selected example</div>
+        </div>
+        <div class="row">
+          <button class="btn small" id="prev">◀ Prev</button>
+          <button class="btn small brand" id="play">Play</button>
+          <button class="btn small" id="next">Next ▶</button>
+        </div>
+      </div>
+      <div class="hr"></div>
+      <div class="row">
+        <div class="chip">Mode</div>
+        <button class="btn small" data-mode="AB" aria-pressed="true">AB</button>
+        <button class="btn small" data-mode="ABX">ABX</button>
+        <div class="chip">Switch</div>
+        <button class="btn small" id="switchAB">A ↔ B</button>
+        <div class="chip">Jump</div>
+        <button class="btn small" id="back1">−1s</button>
+        <button class="btn small" id="fwd1">+1s</button>
+      </div>
+      <div class="hr"></div>
+      <div class="gain">
+        <label for="gain">Output gain <span class="muted">(for level matching; LUFS‑normalize offline is recommended)</span></label>
+        <input id="gain" type="range" min="-12" max="+12" step="0.1" value="0" />
+      </div>
+    </div>
+
+    <div id="examples" class="grid" aria-live="polite"></div>
+
+    <div class="footer">
+      <p>
+        Listening aligns with Tables&nbsp;2–3 in the paper: <em>post‑render ≈ reference &gt; DDSP‑only &gt; in‑graph</em>—steadier harmonic stacks, more consistent spectral tilt, and clearer vowel colour for post‑render. This reflects the data regime: under deliberately low‑data conditions (few sustained vowels with fixed <em>f</em><sub>0</sub>), a strong physics prior (Webster + single radiation scalar) reduces variance and stabilises the envelope, improving /a/ and /u/ while /i/ remains challenging. As scale and variety increase, a well‑tuned DDSP system is expected to close the gap; our focus is complementary—interpretability and data efficiency—and intelligibility is out‑of‑scope given voiced‑only modelling and FDTD–Webster synthesis.
+      </p>
+      <p class="kbd-help">
+        Accessibility: buttons are labeled; use keyboard shortcuts. Audio does not auto‑play. Files are served from <code>assets/audio/&lt;sample&gt;/&lt;variant&gt;.wav</code>.
+      </p>
+    </div>
+  </div>
+
+  <!-- Inline manifest so this page is self-contained. Update paths to your audio files. -->
+  <script type="application/json" id="manifest">
+  {
+    "variants": [
+      { "id": "ref",  "label": "Reference" },
+      { "id": "post", "label": "Post‑render" },
+      { "id": "ddsp", "label": "DDSP‑only" },
+      { "id": "ingraph","label": "In‑graph" }
+    ],
+    "samples": [
+      {
+        "id": "a",
+        "title": "/a/ steady",
+        "note": "Synthetic target; fixed f0",
+        "folder": "a"
+      },
+      {
+        "id": "i",
+        "title": "/i/ steady",
+        "note": "Synthetic target; fixed f0",
+        "folder": "i"
+      },
+      {
+        "id": "u",
+        "title": "/u/ steady",
+        "note": "Synthetic target; fixed f0",
+        "folder": "u"
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    // --- Utility helpers ---
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    // --- Audio engine ---
+    class ABPlayer {
+      constructor(container, sample, variants) {
+        this.container = container;
+        this.sample = sample;
+        this.variants = variants; // array of {id, label}
+        this.mode = 'AB';
+        this.mapping = { A: 'ref', B: 'post' }; // default mapping in AB
+        this.hiddenX = null; // for ABX
+        this.gainDb = 0;
+        this.currentKey = 'A';
+        this.currentTime = 0;
+        this.playing = false;
+        this.audios = new Map();
+        this._build();
+        this._load();
+      }
+      _build() {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="row" style="justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <div>
+              <div class="title">${this.sample.title}</div>
+              <div class="subtitle">${this.sample.note || ''}</div>
+            </div>
+            <div class="row">
+              <button class="btn small" data-action="play">Play</button>
+              <button class="btn small" data-action="stop">Stop</button>
+            </div>
+          </div>
+          <div class="hr"></div>
+          <div class="row" style="gap: 6px; flex-wrap: wrap;">
+            <span class="chip">Mode</span>
+            <button class="btn small" data-mode="AB" aria-pressed="true">AB</button>
+            <button class="btn small" data-mode="ABX">ABX</button>
+            <span class="chip">Now hearing</span>
+            <button class="btn small brand" data-key="A" aria-pressed="true">A</button>
+            <button class="btn small" data-key="B">B</button>
+            <span class="chip">Reveal</span>
+            <button class="btn small" data-reveal>Show mapping</button>
+          </div>
+          <div class="variants" role="group" aria-label="Choose what A/B point to">
+            ${this.variants.map(v => `<button class="btn small" data-bind="A:${v.id}">A→${v.label}</button>`).join('')}
+            ${this.variants.map(v => `<button class="btn small" data-bind="B:${v.id}">B→${v.label}</button>`).join('')}
+          </div>
+          <div class="hr"></div>
+          <div class="row">
+            <span class="chip">Seek</span>
+            <button class="btn small" data-seek="-1">−1s</button>
+            <button class="btn small" data-seek="+1">+1s</button>
+            <span class="chip">Gain</span>
+            <input type="range" min="-12" max="+12" step="0.1" value="0" style="width: 160px;" data-gain />
+          </div>
+          <div class="hr"></div>
+          <div class="row muted" data-map></div>
+        `;
+        this.container.appendChild(card);
+        this.el = card;
+        this._bindUI();
+        this._updateMapLabel();
+      }
+      _bindUI() {
+        this.el.addEventListener('click', (e) => {
+          const b = e.target.closest('button');
+          if (!b) return;
+          if (b.dataset.action === 'play') this.play();
+          else if (b.dataset.action === 'stop') this.stop();
+          else if (b.dataset.mode) this.setMode(b.dataset.mode);
+          else if (b.dataset.key) this.switchKey(b.dataset.key);
+          else if (b.dataset.reveal !== undefined) this._reveal();
+          else if (b.dataset.bind) this._rebind(b.dataset.bind);
+          else if (b.dataset.seek) this.seek(parseFloat(b.dataset.seek));
+        });
+        const gain = this.el.querySelector('[data-gain]');
+        gain.addEventListener('input', () => this.setGain(parseFloat(gain.value)));
+      }
+      _srcFor(variantId) {
+        return `../assets/audio/${this.sample.folder}/${variantId}.wav`;
+      }
+      async _load() {
+        // Create hidden <audio> elements for all variants and keep them in sync
+        for (const v of this.variants) {
+          const el = document.createElement('audio');
+          el.src = this._srcFor(v.id);
+          el.preload = 'auto';
+          el.crossOrigin = 'anonymous';
+          el.addEventListener('error', () => {
+            el.title = '⚠️ Missing audio: ' + el.src;
+          });
+          this.el.appendChild(el); // keep it in DOM so browsers preload
+          this.audios.set(v.id, el);
+        }
+        // When one time updates, mirror to others
+        const ref = this.audios.get(this.mapping.A);
+        ref.addEventListener('timeupdate', () => {
+          if (!this.playing) return;
+          const t = ref.currentTime;
+          for (const [id, a] of this.audios) if (a !== ref && Math.abs(a.currentTime - t) > 0.05) a.currentTime = t;
+        });
+      }
+      _currentAudio() { return this.audios.get(this.mapping[this.currentKey]); }
+      play() {
+        // Start all, but mute except the active one; keep in sync
+        for (const [id, a] of this.audios) {
+          a.muted = true; a.volume = this._volFromDb(this.gainDb);
+          a.play().catch(()=>{});
+        }
+        const cur = this._currentAudio();
+        cur.muted = false;
+        this.playing = true;
+        this._updateButtons();
+      }
+      stop() {
+        for (const [, a] of this.audios) { a.pause(); a.currentTime = 0; }
+        this.playing = false;
+        this._updateButtons();
+      }
+      seek(delta) {
+        for (const [, a] of this.audios) {
+          a.currentTime = Math.max(0, a.currentTime + delta);
+        }
+      }
+      setGain(db) {
+        this.gainDb = db;
+        for (const [, a] of this.audios) a.volume = this._volFromDb(db);
+      }
+      _volFromDb(db) { return Math.max(0, Math.min(1.0, Math.pow(10, db/20))); }
+      setMode(mode) {
+        this.mode = mode;
+        if (mode === 'AB') {
+          this.mapping = { A: this.mapping.A || 'ref', B: this.mapping.B || 'post' };
+          this.hiddenX = null;
+        } else {
+          // Randomise A/B mapping and choose hidden X
+          const ids = this.variants.map(v => v.id);
+          const shuffled = ids.sort(() => Math.random() - 0.5);
+          this.mapping = { A: shuffled[0], B: shuffled[1] };
+          this.hiddenX = Math.random() < 0.5 ? 'A' : 'B';
+        }
+        this.currentKey = 'A';
+        this._updateButtons();
+        this._updateMapLabel();
+      }
+      switchKey(key) {
+        this.currentKey = key; // 'A' or 'B'
+        // ensure only current audible
+        for (const [id, a] of this.audios) a.muted = true;
+        const cur = this._currentAudio();
+        if (cur) cur.muted = false;
+        this._updateButtons();
+      }
+      _rebind(bindStr) { // e.g., "A:ref" or "B:post"
+        const [key, id] = bindStr.split(':');
+        this.mapping[key] = id;
+        this._updateMapLabel();
+        // if currently hearing this key, switch source audibility
+        if (this.currentKey === key) this.switchKey(key);
+      }
+      _reveal() {
+        const map = this.el.querySelector('[data-map]');
+        map.textContent = `A → ${this._label(this.mapping.A)} | B → ${this._label(this.mapping.B)}${this.mode==='ABX' ? ` | X is ${this.hiddenX}` : ''}`;
+      }
+      _label(id) { return this.variants.find(v => v.id === id)?.label || id; }
+      _updateButtons() {
+        // Toggle button visual states
+        $$("button[data-mode]", this.el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode===this.mode)));
+        $$("button[data-key]", this.el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.key===this.currentKey)));
+      }
+      _updateMapLabel() {
+        const map = this.el.querySelector('[data-map]');
+        map.textContent = `A/B targets: ${this._label(this.mapping.A)} vs ${this._label(this.mapping.B)}${this.mode==='ABX' ? ' (hidden X randomised)' : ''}`;
+      }
+    }
+
+    // --- Page controller ---
+    const manifest = JSON.parse(document.getElementById('manifest').textContent);
+    const players = [];
+
+    function build() {
+      const grid = document.getElementById('examples');
+      grid.innerHTML = '';
+      for (const s of manifest.samples) {
+        const p = new ABPlayer(grid, s, manifest.variants);
+        players.push(p);
+      }
+      // Global controls bind to the first visible player (or selected index)
+      let idx = 0;
+      const playBtn = document.getElementById('play');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+      const back1 = document.getElementById('back1');
+      const fwd1 = document.getElementById('fwd1');
+      const switchAB = document.getElementById('switchAB');
+      const modeBtns = $$('[data-mode]', document.getElementById('global'));
+      const gain = document.getElementById('gain');
+
+      function cur() { return players[idx]; }
+      function setIdx(d) { idx = (idx + d + players.length) % players.length; highlight(); }
+      function highlight() {
+        players.forEach((p, i) => p.el.style.outline = i===idx ? '2px solid var(--accent)' : 'none');
+      }
+      highlight();
+
+      playBtn.addEventListener('click', () => cur().play());
+      prevBtn.addEventListener('click', () => setIdx(-1));
+      nextBtn.addEventListener('click', () => setIdx(+1));
+      back1.addEventListener('click', () => cur().seek(-1));
+      fwd1.addEventListener('click', () => cur().seek(+1));
+      switchAB.addEventListener('click', () => cur().switchKey(cur().currentKey === 'A' ? 'B' : 'A'));
+      modeBtns.forEach(b => b.addEventListener('click', () => cur().setMode(b.dataset.mode)));
+      gain.addEventListener('input', () => cur().setGain(parseFloat(gain.value)));
+
+      // Keyboard shortcuts (operate on current card)
+      window.addEventListener('keydown', (e) => {
+        const tag = (e.target && e.target.tagName) || '';
+        if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+        if (e.code === 'Space') { e.preventDefault(); cur().play(); }
+        if (e.key === 'a' || e.key === 'A') { e.preventDefault(); cur().switchKey('A'); }
+        if (e.key === 'b' || e.key === 'B') { e.preventDefault(); cur().switchKey('B'); }
+        if (e.key === 'x' || e.key === 'X') { e.preventDefault(); cur().setMode('ABX'); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); cur().seek(-1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); cur().seek(+1); }
+      });
+    }
+
+    build();
+  </script>
+</body>
+</html>
