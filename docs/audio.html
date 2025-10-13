@@ -3,7 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Webster‑PINN‑SVS — Audio Examples (AB / ABX)</title>
+  <title>Webster-PINN-SVS — Audio Examples (AB / ABX)</title>
+
+  <meta property="og:title" content="Webster-PINN-SVS — Audio Examples (AB / ABX)">
+  <meta property="og:description" content="Physics-guided singing-voice synthesis with a Webster PINN and independent FDTD–Webster post-rendering.">
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "name": "Webster-PINN-SVS: Physics-Guided Singing Voice Synthesis with Learnable Radiation",
+    "author": [
+      { "@type": "Person", "name": "Minhui Lu", "affiliation": "Queen Mary University of London" },
+      { "@type": "Person", "name": "Aidan Hogg", "affiliation": "Queen Mary University of London" },
+      { "@type": "Person", "name": "Joshua D. Reiss", "affiliation": "Queen Mary University of London" }
+    ],
+    "description": "Physics-guided, voiced-only renderer calibrated by a Webster PINN; independent FDTD–Webster post-rendering; low-data regime advantages.",
+    "url": "https://minhuilu.github.io/webster-pinn-svs/docs/audio.html"
+  }
+  </script>
+
   <style>
     :root {
       --bg: #0b0f14;
@@ -17,8 +37,28 @@
       --radius: 16px;
     }
     html, body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .hero { max-width: 1100px; margin: 32px auto 20px; padding: 0 16px; }
+    .badge { display: inline-block; font-size: 12px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); margin-right: 6px; }
+    .paper-title { font-size: clamp(28px, 4vw, 40px); font-weight: 900; letter-spacing: -0.02em; margin: 10px 0 6px; }
+    .paper-subtitle { color: var(--muted); margin: 6px 0 14px; font-size: 16px; }
+    .authors, .affils { margin: 10px 0 0; line-height: 1.5; }
+    .authors a { color: var(--text); text-decoration: none; border-bottom: 1px dashed var(--border); }
+    .cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .cta-row .btn { padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border); background: #13223a; color: var(--text); font-weight: 600; cursor: pointer; }
+    .cta-row .btn.secondary { background: #151c27; }
+    .abstract-card {
+      background: linear-gradient(180deg, #101521, #0c121a);
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 16px; margin-top: 16px;
+    }
+    .abstract-card h2 { margin: 0 0 8px; font-size: 18px; }
+    .meta-line { color: var(--muted); font-size: 13px; margin-top: 8px; }
     .wrap { max-width: 1100px; margin: 24px auto 80px; padding: 0 16px; }
     h1 { font-weight: 800; letter-spacing: -0.015em; margin: 8px 0 6px; }
+    .section-label { color: var(--muted); font-size: 12px; margin-right: 6px; }
     p.lead { color: var(--muted); margin-top: 0; }
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
     .card { background: linear-gradient(180deg, #0f1520, #0c121a); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
@@ -28,7 +68,7 @@
     .btn { --bgc: #151c27; background: var(--bgc); color: var(--text); border: 1px solid var(--border); padding: 8px 12px; border-radius: 12px; cursor: pointer; transition: transform .02s ease, background .2s; font-weight: 600; }
     .btn:hover { background: #182233; }
     .btn[aria-pressed="true"], .btn.active { outline: 2px solid var(--brand); background: #162138; }
-    .btn.small { padding: 6px 10px; font-weight: 600; font-size: 12px; border-radius: 10px; }
+    .btn.small { padding: 6px 10px; font-size: 12px; border-radius: 10px; }
     .btn.brand { background: #13223a; border-color: #1f365a; }
     .btn.danger { background: #2a1720; border-color: #3a1f29; }
     .pill { border-radius: 999px; padding: 6px 10px; border: 1px dashed var(--border); color: var(--muted); }
@@ -43,15 +83,49 @@
     .kbd-help { font-size: 12px; line-height: 1.6; }
     .gain { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; }
     .gain input[type="range"] { width: 100%; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
-    a { color: var(--brand); text-decoration: none; }
-    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
+
+  <header class="hero" id="top">
+    <div class="badge">Preprint</div>
+    <div class="badge">ICASSP 2026 submission</div>
+
+    <h1 class="paper-title">Webster-PINN-SVS: Physics-Guided Singing Voice Synthesis with Learnable Radiation</h1>
+    <p class="paper-subtitle">
+      A physics-guided, voiced-only renderer calibrated by a Webster PINN with a single radiation scalar,
+      evaluated via independent FDTD–Webster post-rendering.
+    </p>
+
+    <p class="authors">
+      <strong>Minhui&nbsp;Lu</strong><sup>1</sup>,
+      <a href="https://www.eecs.qmul.ac.uk/people/professor-joshua-reiss/" target="_blank" rel="noopener">Joshua&nbsp;D.&nbsp;Reiss</a><sup>1</sup>
+    </p>
+    <p class="affils"><sup>1</sup> Centre for Digital Music, Queen Mary University of London</p>
+
+    <div class="cta-row">
+      <a class="btn" href="https://github.com/minhuilu/webster-pinn-svs" target="_blank" rel="noopener">📄 Paper / README</a>
+      <a class="btn secondary" href="#examples">🎧 Audio Examples</a>
+    </div>
+
+    <div class="abstract-card" id="abstract">
+      <h2>Abstract</h2>
+      <p>
+        We present a physics-informed voiced renderer for singing-voice synthesis. Given single-channel audio and a fundamental-frequency trajectory, we train a time-domain Webster model as a physics-informed neural network to estimate an interpretable vocal-tract area function and an open-end radiation coefficient. Training enforces partial differential equation and boundary consistency; a lightweight DDSP path is used only to stabilize learning, while inference is purely physics-based. On sustained vowels (/a/, /i/, /u/), parameters rendered by an independent FDTD–Webster solver reproduce spectral envelopes competitively with a compact DDSP baseline and remain stable under changes in discretization, moderate source variations, and about ten percent pitch shifts. The in-graph waveform remains breathier than the reference, motivating periodicity-aware objectives and explicit glottal priors in future work.
+      </p>
+      <p class="meta-line">
+        Keywords: singing voice synthesis, Webster equation, physics-informed neural networks, differentiable DSP, FDTD, spectral envelope
+      </p>
+    </div>
+  </header>
+
   <div class="wrap">
-    <h1>Webster‑PINN‑SVS — Audio Examples</h1>
-    <p class="lead">AB / ABX listening for <span class="pill">reference</span>, <span class="pill">post‑render</span>, <span class="pill">DDSP‑only</span>, and <span class="pill">in‑graph</span>. Toggle instantly without losing position. Keyboard: <span class="kdb">Space</span> play/pause, <span class="kdb">A</span>/<span class="kdb">B</span> toggle, <span class="kdb">X</span> ABX, <span class="kdb">←/→</span> seek ±1s.</p>
+    <h1><span class="section-label">Section</span> Audio Examples</h1>
+    <p class="lead">
+      AB / ABX listening for <span class="pill">reference</span>, <span class="pill">post-render</span>, <span class="pill">DDSP-only</span>, and <span class="pill">in-graph</span>.
+      Toggle instantly without losing position. Keyboard: <span class="kdb">Space</span> play/pause,
+      <span class="kdb">A</span>/<span class="kdb">B</span> toggle, <span class="kdb">X</span> ABX, <span class="kdb">←/→</span> seek ±1s.
+    </p>
 
     <div class="card" id="global">
       <div class="row" style="justify-content: space-between;">
@@ -78,7 +152,7 @@
       </div>
       <div class="hr"></div>
       <div class="gain">
-        <label for="gain">Output gain <span class="muted">(for level matching; LUFS‑normalize offline is recommended)</span></label>
+        <label for="gain">Output gain <span class="muted">(for level matching; LUFS-normalize offline is recommended)</span></label>
         <input id="gain" type="range" min="-12" max="+12" step="0.1" value="0" />
       </div>
     </div>
@@ -87,63 +161,47 @@
 
     <div class="footer">
       <p>
-        Listening aligns with Tables&nbsp;2–3 in the paper: <em>post‑render ≈ reference &gt; DDSP‑only &gt; in‑graph</em>—steadier harmonic stacks, more consistent spectral tilt, and clearer vowel colour for post‑render. This reflects the data regime: under deliberately low‑data conditions (few sustained vowels with fixed <em>f</em><sub>0</sub>), a strong physics prior (Webster + single radiation scalar) reduces variance and stabilises the envelope, improving /a/ and /u/ while /i/ remains challenging. As scale and variety increase, a well‑tuned DDSP system is expected to close the gap; our focus is complementary—interpretability and data efficiency—and intelligibility is out‑of‑scope given voiced‑only modelling and FDTD–Webster synthesis.
+        Listening aligns with Tables 2–3 in the paper:
+        <em>post-render ≈ reference &gt; DDSP-only &gt; in-graph</em>—steadier harmonic stacks, more consistent spectral tilt, and clearer vowel colour for post-render. This reflects the data regime: under deliberately low-data conditions (few sustained vowels with fixed <em>f</em><sub>0</sub>), a strong physics prior (Webster + single radiation scalar) reduces variance and stabilises the envelope, improving /a/ and /u/ while /i/ remains challenging. As scale and variety increase, a well-tuned DDSP system is expected to close the gap; our focus is complementary—interpretability and data efficiency—and intelligibility is out-of-scope given voiced-only modelling and FDTD–Webster synthesis.
       </p>
       <p class="kbd-help">
-        Accessibility: buttons are labeled; use keyboard shortcuts. Audio does not auto‑play. Files are served from <code>assets/audio/&lt;sample&gt;/&lt;variant&gt;.wav</code>.
+        Accessibility: buttons are labeled; use keyboard shortcuts. Audio does not auto-play.
+        Files are served from <code>assets/audio/&lt;sample&gt;/&lt;variant&gt;.wav</code>.
       </p>
     </div>
   </div>
 
-  <!-- Inline manifest so this page is self-contained. Update paths to your audio files. -->
   <script type="application/json" id="manifest">
   {
     "variants": [
-      { "id": "ref",  "label": "Reference" },
-      { "id": "post", "label": "Post‑render" },
-      { "id": "ddsp", "label": "DDSP‑only" },
-      { "id": "ingraph","label": "In‑graph" }
+      { "id": "ref",    "label": "Reference" },
+      { "id": "post",   "label": "Post-render" },
+      { "id": "ddsp",   "label": "DDSP-only" },
+      { "id": "ingraph","label": "In-graph" }
     ],
     "samples": [
-      {
-        "id": "a",
-        "title": "/a/ steady",
-        "note": "Synthetic target; fixed f0",
-        "folder": "a"
-      },
-      {
-        "id": "i",
-        "title": "/i/ steady",
-        "note": "Synthetic target; fixed f0",
-        "folder": "i"
-      },
-      {
-        "id": "u",
-        "title": "/u/ steady",
-        "note": "Synthetic target; fixed f0",
-        "folder": "u"
-      }
+      { "id": "a", "title": "/a/ steady, f0≈220 Hz", "note": "Synthetic target; fixed f0", "folder": "a" },
+      { "id": "i", "title": "/i/ steady, f0≈220 Hz", "note": "Synthetic target; fixed f0", "folder": "i" },
+      { "id": "u", "title": "/u/ steady, f0≈220 Hz", "note": "Synthetic target; fixed f0", "folder": "u" }
     ]
   }
   </script>
 
   <script>
-    // --- Utility helpers ---
+
     const $ = (sel, el=document) => el.querySelector(sel);
     const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
 
-    // --- Audio engine ---
     class ABPlayer {
       constructor(container, sample, variants) {
         this.container = container;
         this.sample = sample;
-        this.variants = variants; // array of {id, label}
+        this.variants = variants;
         this.mode = 'AB';
-        this.mapping = { A: 'ref', B: 'post' }; // default mapping in AB
-        this.hiddenX = null; // for ABX
+        this.mapping = { A: 'ref', B: 'post' };
+        this.hiddenX = null;
         this.gainDb = 0;
         this.currentKey = 'A';
-        this.currentTime = 0;
         this.playing = false;
         this.audios = new Map();
         this._build();
@@ -210,38 +268,36 @@
         gain.addEventListener('input', () => this.setGain(parseFloat(gain.value)));
       }
       _srcFor(variantId) {
+        // docs/audio.html -> ../assets/
         return `../assets/audio/${this.sample.folder}/${variantId}.wav`;
       }
       async _load() {
-        // Create hidden <audio> elements for all variants and keep them in sync
         for (const v of this.variants) {
           const el = document.createElement('audio');
           el.src = this._srcFor(v.id);
           el.preload = 'auto';
           el.crossOrigin = 'anonymous';
-          el.addEventListener('error', () => {
-            el.title = '⚠️ Missing audio: ' + el.src;
-          });
-          this.el.appendChild(el); // keep it in DOM so browsers preload
+          el.addEventListener('error', () => { el.title = '⚠️ Missing audio: ' + el.src; });
+          this.el.appendChild(el);
           this.audios.set(v.id, el);
         }
-        // When one time updates, mirror to others
         const ref = this.audios.get(this.mapping.A);
         ref.addEventListener('timeupdate', () => {
           if (!this.playing) return;
           const t = ref.currentTime;
-          for (const [id, a] of this.audios) if (a !== ref && Math.abs(a.currentTime - t) > 0.05) a.currentTime = t;
+          for (const [id, a] of this.audios) {
+            if (a !== ref && Math.abs(a.currentTime - t) > 0.05) a.currentTime = t;
+          }
         });
       }
       _currentAudio() { return this.audios.get(this.mapping[this.currentKey]); }
       play() {
-        // Start all, but mute except the active one; keep in sync
-        for (const [id, a] of this.audios) {
+        for (const [, a] of this.audios) {
           a.muted = true; a.volume = this._volFromDb(this.gainDb);
           a.play().catch(()=>{});
         }
         const cur = this._currentAudio();
-        cur.muted = false;
+        if (cur) cur.muted = false;
         this.playing = true;
         this._updateButtons();
       }
@@ -266,9 +322,8 @@
           this.mapping = { A: this.mapping.A || 'ref', B: this.mapping.B || 'post' };
           this.hiddenX = null;
         } else {
-          // Randomise A/B mapping and choose hidden X
           const ids = this.variants.map(v => v.id);
-          const shuffled = ids.sort(() => Math.random() - 0.5);
+          const shuffled = ids.slice().sort(() => Math.random() - 0.5);
           this.mapping = { A: shuffled[0], B: shuffled[1] };
           this.hiddenX = Math.random() < 0.5 ? 'A' : 'B';
         }
@@ -277,27 +332,25 @@
         this._updateMapLabel();
       }
       switchKey(key) {
-        this.currentKey = key; // 'A' or 'B'
-        // ensure only current audible
+        this.currentKey = key;
         for (const [id, a] of this.audios) a.muted = true;
         const cur = this._currentAudio();
         if (cur) cur.muted = false;
         this._updateButtons();
       }
-      _rebind(bindStr) { // e.g., "A:ref" or "B:post"
+      _rebind(bindStr) {
         const [key, id] = bindStr.split(':');
         this.mapping[key] = id;
         this._updateMapLabel();
-        // if currently hearing this key, switch source audibility
         if (this.currentKey === key) this.switchKey(key);
       }
       _reveal() {
         const map = this.el.querySelector('[data-map]');
-        map.textContent = `A → ${this._label(this.mapping.A)} | B → ${this._label(this.mapping.B)}${this.mode==='ABX' ? ` | X is ${this.hiddenX}` : ''}`;
+        map.textContent =
+          `A → ${this._label(this.mapping.A)} | B → ${this._label(this.mapping.B)}${this.mode==='ABX' ? ` | X is ${this.hiddenX}` : ''}`;
       }
       _label(id) { return this.variants.find(v => v.id === id)?.label || id; }
       _updateButtons() {
-        // Toggle button visual states
         $$("button[data-mode]", this.el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode===this.mode)));
         $$("button[data-key]", this.el).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.key===this.currentKey)));
       }
@@ -307,7 +360,6 @@
       }
     }
 
-    // --- Page controller ---
     const manifest = JSON.parse(document.getElementById('manifest').textContent);
     const players = [];
 
@@ -318,7 +370,6 @@
         const p = new ABPlayer(grid, s, manifest.variants);
         players.push(p);
       }
-      // Global controls bind to the first visible player (or selected index)
       let idx = 0;
       const playBtn = document.getElementById('play');
       const prevBtn = document.getElementById('prev');
@@ -345,7 +396,6 @@
       modeBtns.forEach(b => b.addEventListener('click', () => cur().setMode(b.dataset.mode)));
       gain.addEventListener('input', () => cur().setGain(parseFloat(gain.value)));
 
-      // Keyboard shortcuts (operate on current card)
       window.addEventListener('keydown', (e) => {
         const tag = (e.target && e.target.tagName) || '';
         if (tag === 'INPUT' || tag === 'TEXTAREA') return;
