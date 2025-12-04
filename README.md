@@ -8,6 +8,6 @@ Full training and inference scripts will be released after acceptance.)
 
 👉 [Interactive demo on GitHub Pages](https://minhuilu.github.io/webster-pinn-svs/docs/audio.html)
 
-We provide AB/ABX listening comparisons for **Reference, Post-render, and DDSP-only**.  
+We provide listening comparisons for **Reference, Post-render, and DDSP-only**.  
 Listening aligns with Tables 2–3 in the paper:
 _Post-render ≈ Reference > DDSP-only. 
