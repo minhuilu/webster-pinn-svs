@@ -287,9 +287,9 @@
 
       <div class="author-block">
         <span><strong>Minhui&nbsp;Lu</strong>, </span>
-        <span><a href="https://www.eecs.qmul.ac.uk/people/professor-joshua-reiss/" target="_blank" rel="noopener">Joshua&nbsp;D.&nbsp;Reiss</a></span><br>
+        <span><a href="https://joshreiss.github.io/" target="_blank" rel="noopener"><strong>Joshua&nbsp;D.&nbsp;Reiss</strong></a></span><br>
         <span>Centre for Digital Music, Queen Mary University of London</span><br>
-        <span>ICASSP 2026 Submission</span>
+        <span>Accepted at ICASSP 2026</span>
       </div>
 
       <div class="hero-buttons">
@@ -298,6 +298,9 @@
         </a>
         <a href="https://github.com/minhuilu/webster-pinn-svs" target="_blank" rel="noopener" class="button secondary">
           <i class="fab fa-github"></i> Code
+        </a>
+        <a href="#audio-examples" class="button secondary">
+          <i class="fas fa-headphones"></i> Audio Examples
         </a>
       </div>
     </div>
@@ -309,25 +312,31 @@
       <h2>Abstract</h2>
       <div class="abstract">
         <p>
-          We present a physics-informed voiced renderer for singing-voice synthesis. Given single-channel audio and a fundamental-frequency trajectory,
-          we train a time-domain Webster model as a physics-informed neural network to estimate an interpretable vocal-tract area function \(A(x)\) and an
-          open-end radiation coefficient \(\zeta\). Training enforces partial differential equation and boundary consistency; a lightweight DDSP path is used
-          only to stabilise learning, while inference is purely physics-based. On sustained vowels (/a/, /i/, /u/), parameters rendered by an independent
-          FDTD–Webster solver reproduce spectral envelopes competitively with a compact DDSP baseline and remain stable under changes in discretisation,
-          moderate source variations, and pitch shifts of about \(\pm 10\%\). The in-graph waveform is used as a diagnostic signal, motivating periodicity-aware
-          objectives and explicit glottal priors in future work.
+          We present a physics-informed voiced backend renderer for singing-voice synthesis. Given synthetic single-channel audio and a fund-amental--frequency trajectory, we train a time-domain Webster model as a physics-informed neural network to estimate an interpretable vocal-tract area function and an open-end radiation coefficient. Training enforces partial differential equation and boundary consistency; a lightweight DDSP path is used only to stabilize learning, while inference is purely physics-based. On sustained vowels (/a/, /i/, /u/), parameters rendered by an independent finite-difference time-domain Webster solver reproduce spectral envelopes competitively with a compact DDSP baseline and remain stable under changes in discretization, moderate source variations, and about ten percent pitch shifts. The in-graph waveform remains breathier than the reference, motivating periodicity-aware objectives and explicit glottal priors in future work.
         </p>
       </div>
 
-      <img src="../assets/architecture.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <img src="../assets/finalsolver.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
       <p class="figure-caption">
         <strong>Figure 1:</strong>
+        Overview of the physics-informed voiced renderer. DualNet predicts $(\psi,\hat A,\hat\zeta)$ and a differentiable Webster rendering path produces $\hat y(t)$ for reference-based losses during training (inference is physics-only). Solid arrows denote forward signal flow in the renderer; dashed arrows denote training-only loss/backprop connections (e.g., using $y(t)$), which are removed at inference. For solver-independent evaluation (not shown), $(\hat A,\hat\zeta)$ are exported to an independent FDTD--Webster solver for post-render assessment.
+      </p>
+      <img src="../assets/TrainingValidationWorkflow.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <p class="figure-caption">
+        <strong>Figure 2:</strong>
         Simplified overview of the proposed Webster-PINN-SVS system. A time–domain Webster PINN infers an area function \(A(x)\) and a single
         radiation scalar \(\zeta\) from sustained vowels; the learned parameters are then evaluated in an independent FDTD–Webster forward solver.
       </p>
+      <img src="../assets/IndependentFDTD.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <p class="figure-caption">
+        <strong>Figure 3:</strong>
+        Independent FDTD Webster solver used as a physical reference for validation.
+        This solver is not differentiable and is not part of the learning graph.
+      </p>
+
 
       <!-- ===== AUDIO EXAMPLES ===== -->
-      <h2>Audio Examples</h2>
+      <h2 id="audio-examples">Audio Examples</h2>
       <p style="text-align:justify;font-size:0.95rem;">
         Each row below shows a sustained vowel reference rendered by an FDTD–Webster forward model, together with (i) a post-rendered signal generated
         by re-synthesising the learned \(\hat A(x)\) and \(\hat\zeta\) in an independent solver, and (ii) a compact DDSP-only baseline conditioned on the same
