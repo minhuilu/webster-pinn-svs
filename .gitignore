@@ -6,7 +6,6 @@
 !.gitignore
 !README.md
 !REPRODUCIBILITY_LIST.md
-!GH_PAGES_MANIFEST.md
 !requirements-core.txt
 !logs_cheatsheet.md
 
@@ -81,6 +80,10 @@
 **/*.py[cod]
 **/.ipynb_checkpoints/
 **/.git/
+exp/**/ckps/
+exp/**/ckps_start/
+exp/**/data/
+exp/**/*.csv
 **/logs/
 **/ckps/
 **/ckps_start/
