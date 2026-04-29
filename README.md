@@ -6,4 +6,4 @@ Demo page:
 
 https://minhuilu.github.io/webster-pinn-svs/docs/audio.html
 
-The reproducibility code lives on the `main` branch.
+The reproducibility code lives on the `master` branch.
