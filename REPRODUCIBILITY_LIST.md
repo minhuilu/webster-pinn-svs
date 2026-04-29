@@ -43,16 +43,6 @@ Only paper-result reproduction/export tools are public:
 - `metrics/`: final CSV summaries used to check paper tables.
 - `doc/resources/figures/`: selected release figures used for visual context. Manuscript source, PDF drafts, bibliography files, and submission material stay local.
 
-## Not Public / Local Only
-
-These are intentionally ignored by `.gitignore`:
-
-- `_unreleased/needs_cleanup/`: time-varying / sequence experiments and older scripts that are not part of the ICASSP sustained-vowel reproducibility release.
-- `data/synthetic/sequences/`: D/time-varying generated sequence data, not part of the released paper core.
-- `data/real/`: empty local placeholder for future real-data work.
-- `doc/paper/`, `doc/slides/`, `doc/webster-pinn-svs/`, `doc/index.html`: manuscript drafts, presentation material, and demo publishing material rather than paper-core reproducibility code.
-- `ckps/`, `*.pt`, `*.ckpt`: local training checkpoints; readers can rerun or use exported compact metrics/audio.
-- `requirements.txt`: full local environment export with machine-specific build paths; use `requirements-core.txt` instead.
 
 ## Suggested Public Commands
 
