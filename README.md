@@ -4,7 +4,11 @@ This repository contains the public reproducibility code for the ICASSP 2026 pap
 
 The release focuses on the paper's sustained-vowel setting: synthetic /a/, /i/, /u/ references, a physics-informed Webster PINN with learned vocal-tract area and radiation, a compact DDSP baseline/stabilizer, independent FDTD-Webster post-rendering, and the metric/figure export scripts used to check the reported results.
 
-See `REPRODUCIBILITY_LIST.md` for the exact public file list and what is intentionally kept local.
+## Audio Demo
+
+Interactive listening examples are available at:
+
+<https://minhuilu.github.io/webster-pinn-svs/docs/audio.html>
 
 ## Setup
 
@@ -44,11 +48,3 @@ The compact files in `metrics/`, `audio/`, and `figs/` provide the exported pape
 python tools/pack_results.py main --rid main
 python tools/pack_results.py robust --rid main
 ```
-
-Checkpoint directories and model weights are intentionally ignored by Git.
-
-## Audio Demo
-
-Interactive listening examples are available at:
-
-https://minhuilu.github.io/webster-pinn-svs/docs/audio.html
