@@ -9,7 +9,7 @@
   <meta name="description"  content="LEARNING VOCAL-TRACT AREA AND RADIATION WITH A PHYSICS-INFORMED WEBSTER MODEL." />
   <meta property="og:title"        content="LEARNING VOCAL-TRACT AREA AND RADIATION WITH A PHYSICS-INFORMED WEBSTER MODEL" />
   <meta property="og:description"  content="Audio examples, paper and code for a physics-guided, voiced-only singing-voice renderer calibrated by a Webster PINN." />
-  <meta property="og:url"          content="https://minhuilu.github.io/webster-pinn-svs/docs/audio.html" />
+  <meta property="og:url"          content="https://minhuilu.github.io/webster-pinn-svs/" />
   <meta property="og:image"        content="fig_webster_pinn.png" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
@@ -316,18 +316,18 @@
         </p>
       </div>
 
-      <img src="../assets/finalsolver.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <img src="assets/finalsolver.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
       <p class="figure-caption">
         <strong>Figure 1:</strong>
         Overview of the physics-informed voiced renderer. DualNet predicts $(\psi,\hat A,\hat\zeta)$ and a differentiable Webster rendering path produces $\hat y(t)$ for reference-based losses during training (inference is physics-only). Solid arrows denote forward signal flow in the renderer; dashed arrows denote training-only loss/backprop connections (e.g., using $y(t)$), which are removed at inference. For solver-independent evaluation (not shown), $(\hat A,\hat\zeta)$ are exported to an independent FDTD--Webster solver for post-render assessment.
       </p>
-      <img src="../assets/TrainingValidationWorkflow.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <img src="assets/TrainingValidationWorkflow.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
       <p class="figure-caption">
         <strong>Figure 2:</strong>
         Simplified overview of the proposed Webster-PINN-SVS system. A time–domain Webster PINN infers an area function \(A(x)\) and a single
         radiation scalar \(\zeta\) from sustained vowels; the learned parameters are then evaluated in an independent FDTD–Webster forward solver.
       </p>
-      <img src="../assets/IndependentFDTD.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <img src="assets/IndependentFDTD.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
       <p class="figure-caption">
         <strong>Figure 3:</strong>
         Independent FDTD Webster solver used as a physical reference for validation.
@@ -362,12 +362,12 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/a/ref.wav" type="audio/wav" />
+                  <source src="assets/a/ref.wav" type="audio/wav" />
                   Your browser does not support the audio element.
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/a/spec_ref.png"
+                    src="assets/a/spec_ref.png"
                     alt="/a/ reference spectrogram"
                     class="spec-img"
                   />
@@ -377,11 +377,11 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/a/post.wav" type="audio/wav" />
+                  <source src="assets/a/post.wav" type="audio/wav" />
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/a/pinn_post_spec.png"
+                    src="assets/a/pinn_post_spec.png"
                     alt="/a/ post-render spectrogram"
                     class="spec-img"
                   />
@@ -391,11 +391,11 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/a/ddsp.wav" type="audio/wav" />
+                  <source src="assets/a/ddsp.wav" type="audio/wav" />
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/a/ddsp_spec.png"
+                    src="assets/a/ddsp_spec.png"
                     alt="/a/ DDSP-only spectrogram"
                     class="spec-img"
                   />
@@ -411,11 +411,11 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/i/ref.wav" type="audio/wav" />
+                  <source src="assets/i/ref.wav" type="audio/wav" />
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/i/spec_ref.png"
+                    src="assets/i/spec_ref.png"
                     alt="/i/ reference spectrogram"
                     class="spec-img"
                   />
@@ -425,11 +425,11 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/i/post.wav" type="audio/wav" />
+                  <source src="assets/i/post.wav" type="audio/wav" />
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/i/pinn_post_spec.png"
+                    src="assets/i/pinn_post_spec.png"
                     alt="/i/ post-render spectrogram"
                     class="spec-img"
                   />
@@ -439,11 +439,11 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/i/ddsp.wav" type="audio/wav" />
+                  <source src="assets/i/ddsp.wav" type="audio/wav" />
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/i/ddsp_spec.png"
+                    src="assets/i/ddsp_spec.png"
                     alt="/i/ DDSP-only spectrogram"
                     class="spec-img"
                   />
@@ -459,11 +459,11 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/u/ref.wav" type="audio/wav" />
+                  <source src="assets/u/ref.wav" type="audio/wav" />
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/u/spec_ref.png"
+                    src="assets/u/spec_ref.png"
                     alt="/u/ reference spectrogram"
                     class="spec-img"
                   />
@@ -473,11 +473,11 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/u/post.wav" type="audio/wav" />
+                  <source src="assets/u/post.wav" type="audio/wav" />
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/u/pinn_post_spec.png"
+                    src="assets/u/pinn_post_spec.png"
                     alt="/u/ post-render spectrogram"
                     class="spec-img"
                   />
@@ -487,11 +487,11 @@
             <td>
               <div class="audio-cell">
                 <audio controls preload="none">
-                  <source src="../assets/u/ddsp.wav" type="audio/wav" />
+                  <source src="assets/u/ddsp.wav" type="audio/wav" />
                 </audio>
                 <div class="spec-frame">
                   <img
-                    src="../assets/u/ddsp_spec.png"
+                    src="assets/u/ddsp_spec.png"
                     alt="/u/ DDSP-only spectrogram"
                     class="spec-img"
                   />
