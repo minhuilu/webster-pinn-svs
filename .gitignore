@@ -1,0 +1,98 @@
+# Public ICASSP 2026 reproducibility release
+# Default: ignore everything, then explicitly allow the paper-core code/data below.
+*
+
+# Repository metadata and documentation
+!.gitignore
+!README.md
+!REPRODUCIBILITY_LIST.md
+!GH_PAGES_MANIFEST.md
+!requirements-core.txt
+!logs_cheatsheet.md
+
+# Core Python package skeleton
+!__init__.py
+!exp/
+!exp/__init__.py
+!exp/A_static/
+!exp/A_static/__init__.py
+!exp/A_static/audio_bc.py
+!exp/A_static/audio_forward.py
+!exp/A_static/audio_losses.py
+!exp/A_static/audio_psbc.py
+!exp/A_static/phys_consts.py
+!exp/A_static/plot_train_csv.py
+!exp/A_static/run_train.py
+!exp/A_static/synthesize_ref.py
+!exp/A_static/train_with_audio.py
+!exp/B_probes/
+!exp/B_probes/__init__.py
+!exp/B_probes/formant_probe.py
+!exp/C_ddsp/
+!exp/C_ddsp/__init__.py
+!exp/C_ddsp/ddsp_baselines.py
+!exp/C_ddsp/ddsp_synth.py
+!exp/common/
+!exp/common/singer.py
+
+# Reproducibility and export tools used by the paper results
+!tools/
+!tools/__init__.py
+!tools/export_artifacts.py
+!tools/hnr_voicing_eval.py
+!tools/pack_results.py
+!tools/plot_area_overlay.py
+!tools/plot_robust_figs.py
+!tools/post_render_eval.py
+!tools/summarize_c3.py
+!tools/summarize_sA.py
+
+# Optional batch entrypoint for rerunning main static-vowel experiments
+!scripts/
+!scripts/__init__.py
+!scripts/run_all.sh
+
+# Compact synthetic references used by the paper's sustained-vowel experiments
+!data/
+!data/synthetic/
+!data/synthetic/vowels/
+!data/synthetic/vowels/**
+
+# Compact exported demo outputs and summary metrics
+!audio/
+!audio/**
+!figs/
+!figs/**
+!metrics/
+!metrics/**
+
+# Release figures used by the README/demo context. Manuscript source and PDFs stay local.
+!doc/
+!doc/resources/
+!doc/resources/figures/
+!doc/resources/figures/finalsolver.jpeg
+!doc/resources/figures/area_overlay_all.jpeg
+!doc/resources/figures/TrainingValidationWorkflow.jpeg
+!doc/resources/figures/IndependentFDTD.jpeg
+
+# Always ignore generated/cache/private material, even if a broad allow rule changes later.
+**/.DS_Store
+**/__pycache__/
+**/*.py[cod]
+**/.ipynb_checkpoints/
+**/.git/
+**/logs/
+**/ckps/
+**/ckps_start/
+**/*.pt
+**/*.ckpt
+**/*.zip
+_unreleased/
+data/real/
+data/synthetic/sequences/
+doc/slides/
+doc/webster-pinn-svs/
+doc/index.html
+doc/.nojekyll
+doc/resources/templates/
+requirements.txt
