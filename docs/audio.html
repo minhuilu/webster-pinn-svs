@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Webster-PINN-SVS — Audio Examples</title>
+
+  <!-- ======== SOCIAL / SEO ======== -->
+  <meta name="description"  content="LEARNING VOCAL-TRACT AREA AND RADIATION WITH A PHYSICS-INFORMED WEBSTER MODEL." />
+  <meta property="og:title"        content="LEARNING VOCAL-TRACT AREA AND RADIATION WITH A PHYSICS-INFORMED WEBSTER MODEL" />
+  <meta property="og:description"  content="Audio examples, paper and code for a physics-guided, voiced-only singing-voice renderer calibrated by a Webster PINN." />
+  <meta property="og:url"          content="https://minhuilu.github.io/webster-pinn-svs/docs/audio.html" />
+  <meta property="og:image"        content="fig_webster_pinn.png" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:title"  content="LEARNING VOCAL-TRACT AREA AND RADIATION WITH A PHYSICS-INFORMED WEBSTER MODEL" />
+  <meta name="twitter:image"  content="architecture.jpeg" />
+  <meta name="twitter:card"   content="summary_large_image" />
+  <meta name="keywords"       content="singing voice synthesis, differentiable DSP, Webster equation, physics-informed neural networks, FDTD" />
+
+  <!-- fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700;800&family=Noto+Sans:wght@400;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+  <!-- ======== STYLES ======== -->
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #222222;
+      --muted: #5c6675;
+      --accent: #2c3e50;
+      --accent2: #007bff;
+      --border: #e1e5e9;
+      --card: #f8f9fa;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Google Sans','Noto Sans',Arial,sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f7fb;
+    }
+
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 8px; }
+
+    h1, h2, h3 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+    h1 {
+      color: var(--accent);
+      margin-bottom: 1.8rem;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      font-weight: 800;
+    }
+    h2 {
+      color: #34495e;
+      margin-top: 3rem;
+      margin-bottom: 1.4rem;
+      font-size: 1.6rem;
+      font-weight: 800;
+    }
+
+    .hero {
+      margin: 2rem 0 1rem;
+    }
+
+    .hero-title {
+      text-align: center;
+    }
+
+    .hero-subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.98rem;
+      margin-top: -0.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .author-block {
+      text-align: center;
+      font-size: 0.97rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .author-block a {
+      color: var(--accent);
+      border-bottom: 1px dashed #d0d4dc;
+    }
+
+    .hero-buttons {
+      margin-top: 1rem;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    }
+
+    .button:hover {
+      background: #3b4f65;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.16);
+      text-decoration: none;
+    }
+
+    .button.secondary {
+      background: #4b5d78;
+    }
+
+    .abstract {
+      background: var(--card);
+      padding: 1.4rem 1.6rem;
+      border-radius: 10px;
+      margin: 1.6rem 0;
+      text-align: justify;
+      border: 1px solid var(--border);
+      font-size: 0.96rem;
+    }
+
+    .figure-img {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 8px;
+      display: block;
+      margin: 1.4rem auto 0.6rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: #ffffff;
+    }
+
+    .figure-caption,
+    .table-caption {
+      max-width: 900px;
+      margin: 0.4rem auto 0.2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 900px;
+      margin: 1.4rem auto 0.3rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    th {
+      background: #f1f3f6;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    td.label-cell {
+      font-weight: 700;
+      background: #f7f8fb;
+      width: 17%;
+    }
+
+    .audio-table th,
+    .audio-table td {
+      vertical-align: top;
+    }
+
+    .audio-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .audio-cell audio {
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .spec-frame {
+      width: 260px;      /* 和 audio 对齐 */
+      height: 120px;     /* 可按需要调高/调低 */
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px;
+      background: #05080f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spec-frame .spec-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;  /* 若不想裁剪改成 contain */
+    }
+
+    .note {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .metrics-table th,
+    .metrics-table td {
+      font-size: 0.9rem;
+    }
+
+    .metrics-table td strong {
+      font-weight: 800;
+    }
+
+    pre, code {
+      font-family: "SF Mono","Menlo","Monaco","Consolas","Liberation Mono","Courier New",monospace;
+      font-size: 0.85rem;
+    }
+
+    pre {
+      background: #111827;
+      color: #e5e7eb;
+      padding: 1rem 1.2rem;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 2.5rem 0 0.5rem;
+    }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-title">
+        <h1>LEARNING VOCAL-TRACT AREA AND RADIATION WITH A PHYSICS-INFORMED WEBSTER MODEL</h1>
+        <p class="hero-subtitle">
+          Physics-guided, voiced-only renderer calibrated by a Webster PINN and evaluated via independent FDTD–Webster post-rendering.
+        </p>
+      </div>
+
+      <div class="author-block">
+        <span><strong>Minhui&nbsp;Lu</strong>, </span>
+        <span><a href="https://joshreiss.github.io/" target="_blank" rel="noopener"><strong>Joshua&nbsp;D.&nbsp;Reiss</strong></a></span><br>
+        <span>Centre for Digital Music, Queen Mary University of London</span><br>
+        <span>Accepted at ICASSP 2026</span>
+      </div>
+
+      <div class="hero-buttons">
+        <a href="https://doi.org/10.48550/arXiv.2602.13834" target="_blank" rel="noopener" class="button">
+          <i class="fas fa-file-pdf"></i> Paper
+        </a>
+        <a href="https://github.com/minhuilu/webster-pinn-svs" target="_blank" rel="noopener" class="button secondary">
+          <i class="fab fa-github"></i> Code
+        </a>
+        <a href="#audio-examples" class="button secondary">
+          <i class="fas fa-headphones"></i> Audio Examples
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABSTRACT & FIGURE ===== -->
+  <section class="section">
+    <div class="container">
+      <h2>Abstract</h2>
+      <div class="abstract">
+        <p>
+          We present a physics-informed voiced backend renderer for singing-voice synthesis. Given synthetic single-channel audio and a fund-amental--frequency trajectory, we train a time-domain Webster model as a physics-informed neural network to estimate an interpretable vocal-tract area function and an open-end radiation coefficient. Training enforces partial differential equation and boundary consistency; a lightweight DDSP path is used only to stabilize learning, while inference is purely physics-based. On sustained vowels (/a/, /i/, /u/), parameters rendered by an independent finite-difference time-domain Webster solver reproduce spectral envelopes competitively with a compact DDSP baseline and remain stable under changes in discretization, moderate source variations, and about ten percent pitch shifts. The in-graph waveform remains breathier than the reference, motivating periodicity-aware objectives and explicit glottal priors in future work.
+        </p>
+      </div>
+
+      <img src="../assets/finalsolver.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <p class="figure-caption">
+        <strong>Figure 1:</strong>
+        Overview of the physics-informed voiced renderer. DualNet predicts $(\psi,\hat A,\hat\zeta)$ and a differentiable Webster rendering path produces $\hat y(t)$ for reference-based losses during training (inference is physics-only). Solid arrows denote forward signal flow in the renderer; dashed arrows denote training-only loss/backprop connections (e.g., using $y(t)$), which are removed at inference. For solver-independent evaluation (not shown), $(\hat A,\hat\zeta)$ are exported to an independent FDTD--Webster solver for post-render assessment.
+      </p>
+      <img src="../assets/TrainingValidationWorkflow.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <p class="figure-caption">
+        <strong>Figure 2:</strong>
+        Simplified overview of the proposed Webster-PINN-SVS system. A time–domain Webster PINN infers an area function \(A(x)\) and a single
+        radiation scalar \(\zeta\) from sustained vowels; the learned parameters are then evaluated in an independent FDTD–Webster forward solver.
+      </p>
+      <img src="../assets/IndependentFDTD.jpeg" alt="Webster-PINN-SVS architecture" class="figure-img" />
+      <p class="figure-caption">
+        <strong>Figure 3:</strong>
+        Independent FDTD Webster solver used as a physical reference for validation.
+        This solver is not differentiable and is not part of the learning graph.
+      </p>
+
+
+      <!-- ===== AUDIO EXAMPLES ===== -->
+      <h2 id="audio-examples">Audio Examples</h2>
+      <p style="text-align:justify;font-size:0.95rem;">
+        Each row below shows a sustained vowel reference rendered by an FDTD–Webster forward model, together with (i) a post-rendered signal generated
+        by re-synthesising the learned \(\hat A(x)\) and \(\hat\zeta\) in an independent solver, and (ii) a compact DDSP-only baseline conditioned on the same
+        \(f_0(t)\) and RMS. Listening should roughly align with the quantitative trends in the paper: for /a/ and /u/, the post-render closely tracks the
+        reference spectral envelope and periodicity while the DDSP baseline exhibits a looser envelope fit; /i/ remains more challenging under the current
+        low-data regime.
+      </p>
+
+      <table class="audio-table">
+        <thead>
+          <tr>
+            <th>Vowel</th>
+            <th>Ground Truth<br><small>(FDTD–Webster reference)</small></th>
+            <th>Post-render<br><small>(ours, FDTD with \(\hat A,\hat\zeta\))</small></th>
+            <th>DDSP-only baseline<br><small>(harmonic+noise)</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-cell">
+              /a/<br><small>steady, \(f_0 \approx 200\) Hz</small>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/a/ref.wav" type="audio/wav" />
+                  Your browser does not support the audio element.
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/a/spec_ref.png"
+                    alt="/a/ reference spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/a/post.wav" type="audio/wav" />
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/a/pinn_post_spec.png"
+                    alt="/a/ post-render spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/a/ddsp.wav" type="audio/wav" />
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/a/ddsp_spec.png"
+                    alt="/a/ DDSP-only spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label-cell">
+              /i/<br><small>steady, \(f_0 \approx 240\) Hz</small>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/i/ref.wav" type="audio/wav" />
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/i/spec_ref.png"
+                    alt="/i/ reference spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/i/post.wav" type="audio/wav" />
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/i/pinn_post_spec.png"
+                    alt="/i/ post-render spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/i/ddsp.wav" type="audio/wav" />
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/i/ddsp_spec.png"
+                    alt="/i/ DDSP-only spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label-cell">
+              /u/<br><small>steady, \(f_0 \approx 180\) Hz</small>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/u/ref.wav" type="audio/wav" />
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/u/spec_ref.png"
+                    alt="/u/ reference spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/u/post.wav" type="audio/wav" />
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/u/pinn_post_spec.png"
+                    alt="/u/ post-render spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="audio-cell">
+                <audio controls preload="none">
+                  <source src="../assets/u/ddsp.wav" type="audio/wav" />
+                </audio>
+                <div class="spec-frame">
+                  <img
+                    src="../assets/u/ddsp_spec.png"
+                    alt="/u/ DDSP-only spectrogram"
+                    class="spec-img"
+                  />
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="table-caption">
+        <strong>Table 1:</strong>
+        Reference vs post-render vs DDSP-only baseline for sustained vowels. Under the present low-data configuration, the physics-guided post-render
+        is competitive with the reference envelope on /a/ and /u/ and clearly improves upon the DDSP baseline; /i/ remains more demanding.
+      </p>
+
+      <p class="note">
+        All files are loudness-normalised and trimmed for presentation. Listening should be done on headphones or studio monitors.
+      </p>
+
+      <!-- ===== (可选) 简单 metrics 表, 你可以用 paper 中的数值补上 ===== -->
+      <!--
+      <h2>Objective Metrics (Summary)</h2>
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th>Vowel</th>
+            <th>LSD ↓<br><small>Reference vs Post-render</small></th>
+            <th>LSD ↓<br><small>Reference vs DDSP-only</small></th>
+            <th>HNR ↑<br><small>Post-render</small></th>
+            <th>HNR ↑<br><small>DDSP-only</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/a/</td>
+            <td><strong>7–8 dB</strong></td>
+            <td>15–16 dB</td>
+            <td><strong>close to ref.</strong></td>
+            <td>lower</td>
+          </tr>
+          <tr>
+            <td>/i/</td>
+            <td>≈15–16 dB</td>
+            <td><strong>≈13 dB</strong></td>
+            <td>within 1–2 dB of ref.</td>
+            <td>similar</td>
+          </tr>
+          <tr>
+            <td>/u/</td>
+            <td><strong>≈9 dB</strong></td>
+            <td>≈15–16 dB</td>
+            <td><strong>close to ref.</strong></td>
+            <td>lower</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="table-caption">
+        <strong>Table 2:</strong>
+        Illustrative summary of log-spectral distance (LSD, lower is better) and harmonic-to-noise ratio (HNR, higher is better) for post-render and DDSP-only
+        systems. See the paper for exact numerical values and experimental details.
+      </p>
+      -->
+
+      <!-- ===== BIBTEX ===== -->
+      <h2>BibTeX</h2>
+      <p>If you use this work, please cite:</p>
+      <p><em>Lu, M. and Reiss, J.D., 2026. Learning Vocal-Tract Area and Radiation with a Physics-Informed Webster Model. In IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP).</em></p>
+
+      <pre><code>@inproceedings{lu2026websterpinnsvs,
+  title     = {Learning Vocal-Tract Area and Radiation with a Physics-Informed Webster Model},
+  author    = {Lu, Minhui and Reiss, Joshua D.},
+  booktitle = {Proc. IEEE Int. Conf. on Acoustics, Speech and Signal Processing (ICASSP)},
+  year      = {2026}
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    &copy; 2025 Minhui Lu — Webster-PINN-SVS project page.
+  </footer>
+</body>
+</html>
