@@ -8,7 +8,7 @@ The release focuses on the paper's sustained-vowel setting: synthetic /a/, /i/, 
 
 Interactive listening examples are available at:
 
-<https://minhuilu.github.io/webster-pinn-svs/docs/audio.html>
+<https://minhuilu.github.io/webster-pinn-svs/>
 
 ## Setup
 
